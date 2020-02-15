@@ -1,0 +1,50 @@
+CREATE TABLE departments (
+	dept_no VARCHAR(10) NOT NULL PRIMARY KEY
+	, dept_name VARCHAR(128) NOT NULL
+);
+	
+-- emp_no	birth_date	first_name	last_name	gender	hire_date
+CREATE TABLE employees (
+	emp_no INT NOT NULL PRIMARY KEY
+	, birth_date TIMESTAMP NOT NULL
+	, first_name VARCHAR(128) NOT NULL
+	, last_name VARCHAR(128) NOT NULL
+	, gender CHAR(1) NOT NULL
+	, hire_date TIMESTAMP NOT NULL
+);
+	
+-- emp_no	dept_no	from_date	to_date
+CREATE TABLE dept_emp (
+	id SERIAL PRIMARY KEY
+	, emp_no INT NOT NULL REFERENCES employees(emp_no)
+	, dept_no VARCHAR(10) NOT NULL REFERENCES departments(dept_no) 
+	, from_date TIMESTAMP NOT NULL
+	, to_date TIMESTAMP NULL
+	, dept_name VARCHAR(128)
+);
+	
+-- emp_no	title	from_date	to_date
+CREATE TABLE titles (
+	id SERIAL PRIMARY KEY
+	, emp_no INT NOT NULL REFERENCES employees(emp_no)
+	, title VARCHAR(128)
+	, from_date TIMESTAMP NOT NULL
+	, to_date TIMESTAMP NULL
+);
+	
+-- emp_no	salary	from_date	to_date	
+CREATE TABLE salaries (
+	id SERIAL PRIMARY KEY
+	, emp_no INT NOT NULL REFERENCES employees(emp_no)
+	, salary INT NOT NULL 
+	, from_date TIMESTAMP NOT NULL 
+	, to_date TIMESTAMP NULL 
+);
+	
+CREATE TABLE dept_manager (
+	id SERIAL PRIMARY KEY
+	, emp_no INT NOT NULL REFERENCES employees(emp_no)
+	, dept_no VARCHAR(10)NOT NULL REFERENCES departments(dept_no) 
+	, from_date TIMESTAMP NOT NULL
+	, to_date TIMESTAMP NULL
+);
